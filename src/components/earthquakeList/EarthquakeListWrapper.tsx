@@ -19,16 +19,17 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
     const [earthQuakes, setEarthQuakes] = useState<GeoFeature[]>([]);
     const [filterText, setFilterText] = useState("");
 
-    const filterResults = () => {
+    const filterEarthQuakes = () => {
         if (filterText.length < 3) {
             return earthQuakes;
         }
-        return earthQuakes.filter(item => item.properties.place.includes(filterText));
+        return earthQuakes.filter(item =>
+            item.properties.place.toLowerCase().includes(filterText.toLowerCase()));
     }
 
     const fetchEarthQuakes = () => {
         setIsLoading(true);
-        GeoDataService.fetchEarthQuakeData(10)
+        GeoDataService.fetchEarthQuakeData(10000)
             .then((res) => {
                 console.log(res);
                 setEarthQuakes(res.features)
@@ -43,7 +44,7 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
 
     useEffect(() => {
         fetchEarthQuakes();
-        intervalId = setInterval(fetchEarthQuakes, 30 * 1000);
+        intervalId = setInterval(fetchEarthQuakes, 3000 * 1000);
         return () => {
             if (intervalId) {
                 clearInterval(intervalId);
@@ -53,6 +54,6 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
 
     return <>
         <Filter handleChange={setFilterText} />
-        <EarhquakeList data={filterResults()} />
+        <EarhquakeList isLoading={isLoading} data={filterEarthQuakes()} />
     </>
 }

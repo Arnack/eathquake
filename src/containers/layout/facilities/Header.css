@@ -1,0 +1,14 @@
+.header-container {
+    border-bottom: 2px solid #b8c1ec;
+    padding-left: 40px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.app-logo {
+    color: #fffffe;
+    text-decoration: none;
+    max-width: 200px;
+}

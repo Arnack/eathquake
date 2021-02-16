@@ -1,0 +1,10 @@
+.leaflet-container {
+  height: calc(100vh - 75px);
+  min-height: 400px;
+  width: 100%;
+  min-width: 400px;
+}
+
+.leaflet-popup .leaflet-popup-tip-container {
+  margin-left: -7px;
+}

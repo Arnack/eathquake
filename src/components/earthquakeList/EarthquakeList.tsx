@@ -3,6 +3,7 @@ import {GeoFeature} from "../../model/GeoFeature";
 import {Link} from "@reach/router";
 import { FixedSizeList } from 'react-window';
 import "./EarthquakeList.css";
+import {LoadingPlaceholder} from "../loadingPlaceholder/LoadingPlaceholder";
 
 interface IProps {
     data: GeoFeature[];
@@ -51,7 +52,7 @@ export const EarhquakeList: FC<IProps> = ({data, isLoading}) => {
             </div>
             {
                 isLoading ?
-                    <h3>Loading...</h3> :
+                    <LoadingPlaceholder /> :
 
                     <div className={"table-body"}>
                         <FixedSizeList

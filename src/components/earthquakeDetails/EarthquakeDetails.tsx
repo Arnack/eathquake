@@ -10,6 +10,7 @@ import './EarthQuakeDetails.css';
 import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import {LoadingPlaceholder} from "../loadingPlaceholder/LoadingPlaceholder";
 
 interface IProps extends RouteComponentProps {
     earthquakeId?: string;
@@ -35,7 +36,6 @@ export const EarthquakeDetails: FC<IProps> = ({earthquakeId}) => {
         if (earthquakeId != null) {
             GeoDataService.fetchSingleEarthQuake(earthquakeId)
                 .then((res) => {
-                    console.log(res);
                     setQuake(res)
                 })
                 .catch((err) => {
@@ -52,16 +52,14 @@ export const EarthquakeDetails: FC<IProps> = ({earthquakeId}) => {
         fetchSingleEarthQuake();
     }, []);
 
+    if (isLoading) {
+        return <LoadingPlaceholder />
+    }
+
     return <>
         {!isLoading && quake && <MapContainer
-            // @ts-ignore
             center={[quake.geometry.coordinates[1], quake.geometry.coordinates[0]]}
-            // center={[40, 40]}
             zoom={3}
-            maxBounds={[
-                [90, 180],
-                [-90, -180],
-            ]}
             scrollWheelZoom={false}
         >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

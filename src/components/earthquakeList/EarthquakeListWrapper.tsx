@@ -31,7 +31,6 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
         setIsLoading(true);
         GeoDataService.fetchEarthQuakeData(10000)
             .then((res) => {
-                console.log(res);
                 setEarthQuakes(res.features)
             })
             .catch((err) => {

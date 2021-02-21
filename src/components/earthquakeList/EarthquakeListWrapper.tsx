@@ -4,14 +4,10 @@ import {RouteComponentProps} from "@reach/router";
 import {EarthquakeList} from "./EarthquakeList";
 import {GeoFeature} from "../../model/GeoFeature";
 import {Filter} from "../filter/Filter";
+import {toast} from "react-toastify";
 
-interface IProps extends RouteComponentProps  {
-
-}
-
-
+interface IProps extends RouteComponentProps  {}
 let intervalId: NodeJS.Timeout | null = null;
-
 
 export const EarthquakeListWrapper:FC<IProps> = () => {
 
@@ -28,10 +24,12 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
         setIsLoading(true);
         GeoDataService.fetchEarthQuakeData(2000)
             .then((res) => {
-                setEarthQuakes(res.features)
+                setEarthQuakes(res.features);
+                toast.info("Data updated");
             })
             .catch((err) => {
                 console.error(err.toString());
+                toast.error("Unable to update data");
             })
             .finally(() => {
                 setIsLoading(false);

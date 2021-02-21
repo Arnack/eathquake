@@ -10,6 +10,16 @@ body {
   overflow: hidden;
 }
 
+button {
+  background-color: #eebbc3;
+  color: #232946;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 2px solid #232946;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

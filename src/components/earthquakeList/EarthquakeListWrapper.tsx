@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from "react";
 import {GeoDataService} from "../../services/api/GeoDataService";
 import {RouteComponentProps} from "@reach/router";
-import {EarhquakeList} from "./EarthquakeList";
+import {EarthquakeList} from "./EarthquakeList";
 import {GeoFeature} from "../../model/GeoFeature";
 import {Filter} from "../filter/Filter";
 
@@ -20,16 +20,13 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
     const [filterText, setFilterText] = useState("");
 
     const filterEarthQuakes = () => {
-        if (filterText.length < 3) {
-            return earthQuakes;
-        }
         return earthQuakes.filter(item =>
             item.properties.place.toLowerCase().includes(filterText.toLowerCase()));
     }
 
     const fetchEarthQuakes = () => {
         setIsLoading(true);
-        GeoDataService.fetchEarthQuakeData(10000)
+        GeoDataService.fetchEarthQuakeData(2000)
             .then((res) => {
                 setEarthQuakes(res.features)
             })
@@ -43,7 +40,7 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
 
     useEffect(() => {
         fetchEarthQuakes();
-        intervalId = setInterval(fetchEarthQuakes, 3000 * 1000);
+        intervalId = setInterval(fetchEarthQuakes, 30 * 1000);
         return () => {
             if (intervalId) {
                 clearInterval(intervalId);
@@ -53,6 +50,6 @@ export const EarthquakeListWrapper:FC<IProps> = () => {
 
     return <>
         <Filter handleChange={setFilterText} />
-        <EarhquakeList isLoading={isLoading} data={filterEarthQuakes()} />
+        <EarthquakeList isLoading={isLoading && !earthQuakes.length} data={filterEarthQuakes()} />
     </>
 }

@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {GeoFeature} from "../../model/GeoFeature";
 import {Link} from "@reach/router";
-import { FixedSizeList } from 'react-window';
+import {FixedSizeList} from 'react-window';
 import "./EarthquakeList.css";
 import {LoadingPlaceholder} from "../loadingPlaceholder/LoadingPlaceholder";
 
@@ -10,10 +10,9 @@ interface IProps {
     isLoading?: boolean;
 }
 
-export const EarhquakeList: FC<IProps> = ({data, isLoading}) => {
-
+export const EarthquakeList: FC<IProps> = ({data, isLoading}) => {
     const RenderRow = React.useCallback(
-        ({ index, style }) => {
+        ({index, style}) => {
             const feature = data[index]
             return (
                 <div className={"table-row"} style={style} key={feature.id}>
@@ -33,7 +32,7 @@ export const EarhquakeList: FC<IProps> = ({data, isLoading}) => {
                         {new Date(feature.properties.time).toLocaleTimeString()}
                     </div>
                     <div className={"cell actions-cell"}>
-                        <Link to={`features/${feature.id}`}>Details</Link>
+                        <Link to={`features/${feature.id}`}>Details &raquo;</Link>
                     </div>
                 </div>
             )
@@ -44,26 +43,25 @@ export const EarhquakeList: FC<IProps> = ({data, isLoading}) => {
     return <div className={"earthquake-list__wrapper"}>
         <div className={"table"}>
             <div className={"table-header"}>
-                    <div className={"header-cell code-cell"}>Code</div>
-                    <div className={"header-cell place-cell"}>Place</div>
-                    <div className={"header-cell coords-cell"}>Coordinates</div>
-                    <div className={"header-cell date-cell"}>Time</div>
-                    <div className={"header-cell actions-cell"}><span>Actions</span></div>
+                <div className={"header-cell code-cell"}>Code</div>
+                <div className={"header-cell place-cell"}>Place</div>
+                <div className={"header-cell coords-cell"}>Coordinates</div>
+                <div className={"header-cell date-cell"}>Time</div>
+                <div className={"header-cell actions-cell"}><span>Actions</span></div>
             </div>
             {
                 isLoading ?
-                    <LoadingPlaceholder /> :
+                    <LoadingPlaceholder/> :
 
-                    <div className={"table-body"}>
-                        <FixedSizeList
-                            height={window.innerHeight - 200}
-                            itemCount={data.length}
-                            itemSize={24}
-                            width={"100%"}
-                        >
-                            {RenderRow}
-                        </FixedSizeList>
-                    </div>
+                    <FixedSizeList
+                        className={"table-body"}
+                        height={window.innerHeight - 200}
+                        itemCount={data.length}
+                        itemSize={24}
+                        width={"100%"}
+                    >
+                        {RenderRow}
+                    </FixedSizeList>
             }
         </div>
     </div>
